@@ -1,0 +1,24 @@
+.chat{
+    color: brown;
+}
+body{
+    padding-left: 10px;
+    display: inline-block;
+    background-color: antiquewhite;
+}
+.container{
+    background-color: lightseagreen;
+    width: 450px;
+    height: 170px;
+    border-radius: 16px;
+}
+.msg{
+    background-color: blue;
+    color: white;
+    border-radius: 16px;
+    padding: 5px 15px;
+    margin: 5px;
+}
+.chat{
+    padding: 4px;
+}

@@ -3,9 +3,12 @@ const app=express();
 const mongoose= require("mongoose");
 const Chats = require("./models/chat.js");
 const path = require("path");
+const { url } = require("inspector");
 
 app.set("views",path.join(__dirname,"views"));
-app.set("view engine","views");
+app.set("view engine","ejs");
+app.use(express.static(path.join(__dirname,"public")));
+app.use(express.urlencoded({extended:true}));
               //database connection
 main()
 .then(()=>{
@@ -18,27 +21,32 @@ async function main(){
     await mongoose.connect("mongodb://127.0.0.1:27017/Whatsapp");
 }
 
-let chat1=new Chats({
-    from:"Tauqueer",
-    to:"Naved",
-    msg:"could you please,send me my money",
-    created_at:new Date()
+app.get('/chats',async(req,res)=>{
+    let chats= await Chats.find();
+    console.log(chats);
+    res.render("index",{ chats });
 });
 
-let chat2=new Chats({
-    from:"Tauqueer",
-    to:"Uzma",
-    msg:"Hello,Uzzu",
-    created_at:new Date()
+app.get("/new/chats",(req,res)=>{
+    res.render("new.ejs");
 });
 
-chat1.save().then((res)=>{
-    console.log(res);
-})
-
-chat2.save().then((res)=>{
-    console.log(res);
-})
+app.post("/chats",(req,res)=>{
+  let{from,to,msg}=req.body;
+  let newchat= new Chats({
+    from:from,
+    to:to,
+    msg:msg,
+    created_at:new Date()
+  });
+  newchat.save()
+  .then((res)=>{
+    console.log("chat was saved");
+  }).catch((err)=>{
+    console.log(err);
+  })
+  res.redirect("/chats");
+});
 
 app.get("/",(req,res)=>{
     res.send("Hi,I am root");
