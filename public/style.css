@@ -9,8 +9,11 @@ body{
 .container{
     background-color: lightseagreen;
     width: 450px;
-    height: 170px;
+    height: fit-content;
     border-radius: 16px;
+}
+.container p{
+    padding-left: 6px;
 }
 .msg{
     background-color: blue;
@@ -21,4 +24,7 @@ body{
 }
 .chat{
     padding: 4px;
+}
+.new_container{
+    background-color: rgb(72, 221, 171);
 }
